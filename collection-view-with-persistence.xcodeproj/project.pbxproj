@@ -15,6 +15,7 @@
 		545334F923463C1F000B9B4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 545334F723463C1F000B9B4C /* LaunchScreen.storyboard */; };
 		5453350123463C46000B9B4C /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453350023463C46000B9B4C /* Dog.swift */; };
 		5453350723463E1D000B9B4C /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453350623463E1D000B9B4C /* Favorite.swift */; };
+		5453350B234641B5000B9B4C /* DogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453350A234641B5000B9B4C /* DogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		545334FA23463C1F000B9B4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5453350023463C46000B9B4C /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		5453350623463E1D000B9B4C /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		5453350A234641B5000B9B4C /* DogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				545334F223463C1D000B9B4C /* Main.storyboard */,
+				5453350A234641B5000B9B4C /* DogCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5453350723463E1D000B9B4C /* Favorite.swift in Sources */,
+				5453350B234641B5000B9B4C /* DogCollectionViewCell.swift in Sources */,
 				545334F123463C1D000B9B4C /* ViewController.swift in Sources */,
 				545334ED23463C1D000B9B4C /* AppDelegate.swift in Sources */,
 				5453350123463C46000B9B4C /* Dog.swift in Sources */,

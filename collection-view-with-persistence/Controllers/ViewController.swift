@@ -8,13 +8,52 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class DogsViewController: UIViewController {
+    
+    var dogs = [Dog]() {
+        didSet {
+            dogsCollectionView.reloadData()
+        }
+    }
+    
+    @IBOutlet weak var dogsCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setUpCollectionView()
+        loadData()
     }
-
-
+    
+    private func setUpCollectionView() {
+        dogsCollectionView.dataSource = self
+        layout()
+    }
+    
+    private func loadData() {
+        dogs = Dog.getDogs()
+    }
 }
 
+extension DogsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dogs.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let dog = dogs[indexPath.row]
+        guard let  cell = dogsCollectionView.dequeueReusableCell(withReuseIdentifier: "dogCell", for: indexPath) as? DogCollectionViewCell else {return UICollectionViewCell()}
+        cell.breedLabel.text = dog.breed
+        cell.dogImageView.image = UIImage(named: dog.image)
+        return cell
+    }
+}
+
+extension DogsViewController: UICollectionViewDelegateFlowLayout {
+    func layout() {
+        guard let layout = self.dogsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.itemSize = CGSize(width: (self.dogsCollectionView.frame.size.width - 20) / 3, height: self.dogsCollectionView.frame.size.height / 4)
+        layout.scrollDirection = .horizontal
+    }
+}
