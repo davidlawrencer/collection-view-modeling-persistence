@@ -17,4 +17,10 @@ struct Dog {
         return [ Dog(breed:"collie", image: "collie", id: 1 ), Dog(breed: "Chinese Tibetan Mastiff", image: "chinese-tibetan-mastiff", id: 2)
         ]
     }
+    
+    static func getIDForNewDog() -> Int {
+        let dogs = Dog.getDogs
+        var max = dogs.map({$0.id}).max()
+        return max + 1
+    }
 }
