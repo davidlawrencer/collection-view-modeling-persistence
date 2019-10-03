@@ -14,7 +14,7 @@ struct Dog {
     let id: Int
     
     static func getDogs() -> [Dog] {
-        return [ Dog(breed:"collie", image: "collie", id: 1 ), Dog(breed: "Chinese Tibetan Mastiff", image: "chinese-tibetan-mastiff", id: 2)
+        return [ Dog(breed:"collie", image: "collie", id: 1 ), Dog(breed: "Chinese Tibetan Mastiff", image: "chinese-tibetan-mastiff", id: 2), Dog(breed: "Corgi", image: "collie", id: 3), Dog(breed: "retriever", image: "collie", id: 4)
         ]
     }
     

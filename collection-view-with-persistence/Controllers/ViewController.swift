@@ -43,8 +43,8 @@ class DogsViewController: UIViewController {
     }
     
     private func performFavoriteAction(breed: String, id: Int, isFaved: Bool) {
-        let alertVC = UIAlertController(title: "\({return isFaved ? "Unf" : "F" }())avorite \(breed)?", message: nil, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+        let alertVC = UIAlertController(title: "\({return isFaved ? "Unf" : "F" }())avorite \(breed)?", message: nil, preferredStyle: .actionSheet)
+        alertVC.addAction(UIAlertAction(title: "Yes", style: {return isFaved ? .destructive : .default }(), handler: { (action) in
             //this will create a new favorite for a dog
             DispatchQueue.global(qos: .utility).async {
                 do {
@@ -65,6 +65,7 @@ class DogsViewController: UIViewController {
                 }
             }
         }))
+        
         alertVC.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
         self.present(alertVC, animated: true, completion: nil)    }
