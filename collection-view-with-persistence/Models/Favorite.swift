@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct Favorite {
+struct Favorite: Codable {
     let dogID: Int
 }
