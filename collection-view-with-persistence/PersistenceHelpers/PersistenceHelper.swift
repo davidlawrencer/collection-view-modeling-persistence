@@ -19,22 +19,15 @@ struct PersistenceHelper<T: Codable> {
     func save(newElement: T) throws {
         var elements = try getObjects()
         elements.append(newElement)
-        let serializedData = try PropertyListEncoder().encode(elements)
-        try serializedData.write(to: url, options: Data.WritingOptions.atomic)
+        try replace(elements: elements)
     }
     
     //TODO: - Build out delete functionality
-//    func replace(elements: [T]) throws {
-//
-//    }
-//
-//    func delete(element: T, withID: Int) throws {
-//        do {
-//            let elements = try getObjects()
-//            let newElements = elements.filter { $0.id != withID}
-//            save(newFavorite: <#T##Favorite#>)
-//        }
-//    }
+    func replace(elements: [T]) throws {
+      let serializedData = try PropertyListEncoder().encode(elements)
+      try serializedData.write(to: url, options: Data.WritingOptions.atomic)
+    }
+
     
     init(fileName: String){
         self.fileName = fileName

@@ -20,13 +20,13 @@ struct FavoritePersistenceHelper {
     }
     
     //TODO: - Build out delete functionality
-//    func deleteFavorite(withID: Int) throws {
-//        do {
-//            let favorites = try getFavorites()
-//            let newFavorites = favorites.filter { $0.dogID != withID}
-//            save(newFavorite: <#T##Favorite#>)
-//        }
-//    }
+    func deleteFavorite(withID: Int) throws {
+        do {
+            let favorites = try getFavorites()
+            let newFavorites = favorites.filter { $0.dogID != withID}
+            try persistenceHelper.replace(elements: newFavorites)
+        }
+    }
 
     private let persistenceHelper = PersistenceHelper<Favorite>(fileName: "favorites.plist")
 

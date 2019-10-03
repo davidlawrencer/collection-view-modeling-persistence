@@ -18,7 +18,9 @@ class DogsViewController: UIViewController {
     
     var favorites = [Favorite]() {
         didSet {
-            dogsCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.dogsCollectionView.reloadData()
+            }
         }
     }
     
@@ -40,17 +42,27 @@ class DogsViewController: UIViewController {
         favorites = try! FavoritePersistenceHelper.manager.getFavorites()
     }
     
-    private func performFavoriteAction(breed: String, id: Int) {
-        let alertVC = UIAlertController(title: "Favorite \(breed)?", message: nil, preferredStyle: .alert)
+    private func performFavoriteAction(breed: String, id: Int, isFaved: Bool) {
+        let alertVC = UIAlertController(title: "\({return isFaved ? "Unf" : "F" }())avorite \(breed)?", message: nil, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
             //this will create a new favorite for a dog
             DispatchQueue.global(qos: .utility).async {
                 do {
-                    try FavoritePersistenceHelper.manager.save(newFavorite: Favorite(dogID: id))
+                    if isFaved {
+                        try FavoritePersistenceHelper.manager.deleteFavorite(withID: id)
+                    } else {
+                        try FavoritePersistenceHelper.manager.save(newFavorite: Favorite(dogID: id))
+                    }
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        do {
+                            self.favorites = try FavoritePersistenceHelper.manager.getFavorites()
+                        } catch {
+                            //couldn't get favorites
+                        }
+                    }
                 } catch {
                     //could not favorite, try again later
                 }
-                
             }
         }))
         alertVC.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -69,14 +81,18 @@ extension DogsViewController: UICollectionViewDataSource {
         cell.breedLabel.text = ""
         cell.dogImageView.image = UIImage(named: dog.image)
         
-        cell.buttonFunction = {
-            self.performFavoriteAction(breed: dog.breed, id: dog.id)
-        }
-        
+        var isFaved = false
         if favorites.contains(where: { $0.dogID == dog.id }) {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            isFaved = true
+        } else {
+            cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
 
+        cell.buttonFunction = {
+            self.performFavoriteAction(breed: dog.breed, id: dog.id, isFaved: isFaved)
+        }
+        
         return cell
     }
 }
