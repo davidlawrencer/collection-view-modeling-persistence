@@ -19,8 +19,8 @@ struct Dog {
     }
     
     static func getIDForNewDog() -> Int {
-        let dogs = Dog.getDogs
-        var max = dogs.map({$0.id}).max()
+        let dogs = Dog.getDogs()
+        var max = dogs.map{$0.id}.max() ?? 0
         return max + 1
     }
 }
