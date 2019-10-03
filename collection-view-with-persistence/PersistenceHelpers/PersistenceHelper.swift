@@ -23,6 +23,19 @@ struct PersistenceHelper<T: Codable> {
         try serializedData.write(to: url, options: Data.WritingOptions.atomic)
     }
     
+    //TODO: - Build out delete functionality
+//    func replace(elements: [T]) throws {
+//
+//    }
+//
+//    func delete(element: T, withID: Int) throws {
+//        do {
+//            let elements = try getObjects()
+//            let newElements = elements.filter { $0.id != withID}
+//            save(newFavorite: <#T##Favorite#>)
+//        }
+//    }
+    
     init(fileName: String){
         self.fileName = fileName
     }
@@ -34,7 +47,7 @@ struct PersistenceHelper<T: Codable> {
     }
     
     private let fileName: String
-    
+        
     private var url: URL {
         return filePathFromDocumentsDirectory(name: fileName)
     }
