@@ -16,6 +16,12 @@ class DogsViewController: UIViewController {
         }
     }
     
+    var favorites = [Favorite]() {
+        didSet {
+            dogsCollectionView.reloadData()
+        }
+    }
+    
     @IBOutlet weak var dogsCollectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -31,7 +37,15 @@ class DogsViewController: UIViewController {
     
     private func loadData() {
         dogs = Dog.getDogs()
+        favorites = FavoritePersistenceHelper.manager.getFavorites()
     }
+    
+    private func presentAlert(breed: String) {
+        let alertVC = UIAlertController(title: "Favorite \(breed)?", message: nil, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        self.present(alertVC, animated: true, completion: nil)    }
 }
 
 extension DogsViewController: UICollectionViewDataSource {
@@ -42,8 +56,12 @@ extension DogsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let dog = dogs[indexPath.row]
         guard let  cell = dogsCollectionView.dequeueReusableCell(withReuseIdentifier: "dogCell", for: indexPath) as? DogCollectionViewCell else {return UICollectionViewCell()}
-        cell.breedLabel.text = dog.breed
+        cell.breedLabel.text = ""
         cell.dogImageView.image = UIImage(named: dog.image)
+        cell.buttonFunction = {
+            self.presentAlert(breed: dog.breed)
+        }
+        print(cell.constraints)
         return cell
     }
 }
